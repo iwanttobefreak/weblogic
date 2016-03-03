@@ -52,3 +52,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 </domain-template-descriptor>' > $tmp_silent
 
 $java -jar $software -mode=silent -silent_xml=$tmp_silent
+
+# Creación  del dominio
+curl -s -O "https://github.com/iwanttobefreak/weblogic/blob/master/template1036.jar"
+
