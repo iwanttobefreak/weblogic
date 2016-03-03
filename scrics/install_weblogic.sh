@@ -1,4 +1,5 @@
 #!/bin/bash
+#Descarga de Software
 mkdir /u01/software
 cd /u01/software
 
@@ -33,3 +34,21 @@ tar -xzvf /u01/software/jdk-7u79-linux-x64.tar.gz -C /u01/jdk
 #rm jdk-7u79-linux-x64.tar.gz
 ln -s /u01/jdk/jdk1.7.0_79 /u01/java
 
+#Instalación Weblogic
+ruta=/u01/middleware1036
+java=/u01/java/bin/java
+software=/u01/software/wls1036_generic.jar
+tmp_silent=/tmp/$$_silent.xml
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<domain-template-descriptor>
+
+<input-fields>
+   <data-value name="BEAHOME"                   value="'$ruta'" />
+   <data-value name="USER_INSTALL_DIR"          value="'$ruta'" />
+   <data-value name="INSTALL_NODE_MANAGER_SERVICE"   value="no" />
+   <data-value name="COMPONENT_PATHS" value="WebLogic Server" />
+</input-fields>
+</domain-template-descriptor>' > $tmp_silent
+
+$java -jar $software -mode=silent -silent_xml=$tmp_silent
