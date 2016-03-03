@@ -54,5 +54,23 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 $java -jar $software -mode=silent -silent_xml=$tmp_silent
 
 # Creación  del dominio
-curl -s -O "https://github.com/iwanttobefreak/weblogic/blob/master/template1036.jar"
+curl -s -O template1036.jar "https://wiki.legido.com/lib/exe/fetch.php?media=informatica:weblogic:template.jar"
+
+template=/u01/software/template1036.jar
+ruta_dominio=/u01/domains
+nou_template=/tmp/$$_nou_template.jar
+source $ruta/wlserver_10.3/server/bin/setWLSEnv.sh
+nombre_dominio=prueba
+
+read -p "Usuario admin [weblogic]:" usuario
+read -s -p "Password:" contrasenya
+
+$java weblogic.WLST <<EOF
+readTemplate('$template')
+set('Name','$nombre_dominio')
+writeTemplate('$nou_template')
+closeTemplate()
+createDomain('$nou_template','$ruta_dominio/$nombre_dominio','$usuario','$contrasenya')
+exit()
+EOF
 
