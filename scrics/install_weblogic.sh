@@ -53,7 +53,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 $java -jar $software -mode=silent -silent_xml=$tmp_silent
 
 # Creación  del dominio
-curl -s -O template1036.jar -k "https://wiki.legido.com/lib/exe/fetch.php?media=informatica:weblogic:template.jar"
+curl -s -o template1036.jar -k "https://wiki.legido.com/lib/exe/fetch.php?media=informatica:weblogic:template.jar"
 
 template=/u01/software/template1036.jar
 ruta_dominio=/u01/domains
