@@ -1,18 +1,44 @@
 #!/bin/bash
-if [ $# -wq 0 ]
+if [ $# -eq 0 ]
 then
-  echo "Parámetros :"
-  echo
-  echo "-l local"
-  echo "-i internet"
-  echo
-  exit 1
+cat << EOF
+
+  Parámetros
+  -l, --local    Software en Local
+                 Ejemplo: -l /u01/software
+  -i, --internet Descarga el software desde internet
+
+EOF
+exit 1
 fi
+
+v_local=0
+
+#!/bin/bash
+while getopts "il:" optname; do
+  case "$optname" in
+    "i")
+      v_internet=1
+      ;;
+    "l")
+      v_local=1
+      v_descarga_software="$OPTARG"
+      ;;
+    *)
+    # Error no controlado
+      echo "Error en los parametros"
+      exit 1
+      ;;
+  esac
+done
 
 
 #Variables
 # Carpeta descarga software
-v_descarga_software=/u01/software
+if [ v_local -ne 1 ]
+then
+  v_descarga_software=/u01/software
+fi
 v_ruta_binarios=/u01/middleware1036
 v_java=/u01/java/bin/java
 v_template=/u01/software/template1036.jar
@@ -78,7 +104,7 @@ source $v_ruta_binarios/wlserver_10.3/server/bin/setWLSEnv.sh
 read -p "Usuario admin [weblogic]:" v_weblogic_user
 read -s -p "Password:" v_weblogic_password
 
-$java weblogic.WLST <<EOF
+$v_java weblogic.WLST <<EOF
 readTemplate('$v_template')
 set('Name','$v_nombre_dominio')
 writeTemplate('$v_nou_template')
