@@ -22,7 +22,7 @@ curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0
 -o /dev/null \
 https://login.oracle.com/sso/auth -c $cookie
 
-echo '.oracle.com       TRUE    /       FALSE   0       oraclelicense   accept-dbindex-cookie' >> $cookie
+echo '.oracle.com	TRUE	/	FALSE	0	oraclelicense	accept-dbindex-cookie' >> $cookie
 
 curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0 Iceweasel/38.6.0" \
 -b $cookie \
@@ -31,7 +31,6 @@ curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0 Ic
 #Instalacion JVM
 mkdir /u01/jdk
 tar -xzvf /u01/software/jdk-7u79-linux-x64.tar.gz -C /u01/jdk
-#rm jdk-7u79-linux-x64.tar.gz
 ln -s /u01/jdk/jdk1.7.0_79 /u01/java
 
 #Instalación Weblogic
