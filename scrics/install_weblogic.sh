@@ -1,11 +1,28 @@
 #!/bin/bash
+if [ $# -wq 0 ]
+then
+  echo "Parámetros :"
+  echo
+  echo "-l local"
+  echo "-i internet"
+  echo
+  exit 1
+fi
+
+
 #Variables
 # Carpeta descarga software
 v_descarga_software=/u01/software
 v_ruta_binarios=/u01/middleware1036
 v_java=/u01/java/bin/java
-
-
+v_template=/u01/software/template1036.jar
+v_ruta_dominio=/u01/domains
+v_nou_template=/tmp/$$_nou_template.jar
+v_nombre_dominio=prueba
+v_cookie=/tmp/$$_cookie
+v_download=http://download.oracle.com/otn/nt/middleware/11g/wls/1036/wls1036_generic.jar
+v_software=/u01/software/wls1036_generic.jar
+v_tmp_silent=/tmp/$$_silent.xml
 
 
 mkdir $v_descarga_software
@@ -20,8 +37,6 @@ curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0 Ic
 read -p "Oracle User:" v_usuario_oracle
 read -s -p "Password:" v_contrasenya_oracle
 
-v_cookie=/tmp/$$_cookie
-v_download=http://download.oracle.com/otn/nt/middleware/11g/wls/1036/wls1036_generic.jar
 
 v_Site2pstoreToken=`curl -s -A "Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0 Iceweasel/38.6.0" "http://www.oracle.com/webapps/redirect/signon?nexturl=https://www.oracle.com/technetwork/indexes/downloads/index.html" | grep Site2pstoreToken | awk -F\= {'print  $3'} | awk -F\" {'print $1'}`
 
@@ -42,9 +57,6 @@ tar -xzvf /u01/software/jdk-7u79-linux-x64.tar.gz -C /u01/jdk
 ln -s /u01/jdk/jdk1.7.0_79 /u01/java
 
 #Instalación Weblogic
-v_software=/u01/software/wls1036_generic.jar
-v_tmp_silent=/tmp/$$_silent.xml
-
 echo '<?xml version="1.0" encoding="UTF-8"?>
 <domain-template-descriptor>
 
@@ -61,11 +73,7 @@ $v_java -jar $v_software -mode=silent -silent_xml=$v_tmp_silent
 # Creación  del dominio
 curl -s -o template1036.jar -k "https://wiki.legido.com/lib/exe/fetch.php?media=informatica:weblogic:template.jar"
 
-v_template=/u01/software/template1036.jar
-v_ruta_dominio=/u01/domains
-v_nou_template=/tmp/$$_nou_template.jar
 source $v_ruta_binarios/wlserver_10.3/server/bin/setWLSEnv.sh
-v_nombre_dominio=prueba
 
 read -p "Usuario admin [weblogic]:" v_weblogic_user
 read -s -p "Password:" v_weblogic_password
