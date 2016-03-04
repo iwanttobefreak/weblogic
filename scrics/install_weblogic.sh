@@ -2,7 +2,7 @@
 #Variables
 # Carpeta descarga software
 v_descarga_software=/u01/software
-v_ruta=/u01/middleware1036
+v_ruta_binarios=/u01/middleware1036
 v_java=/u01/java/bin/java
 
 
@@ -49,8 +49,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <domain-template-descriptor>
 
 <input-fields>
-   <data-value name="BEAHOME"                   value="'$v_ruta'" />
-   <data-value name="USER_INSTALL_DIR"          value="'$v_ruta'" />
+   <data-value name="BEAHOME"                   value="'$v_ruta_binarios'" />
+   <data-value name="USER_INSTALL_DIR"          value="'$v_ruta_binarios'" />
    <data-value name="INSTALL_NODE_MANAGER_SERVICE"   value="no" />
    <data-value name="COMPONENT_PATHS" value="WebLogic Server" />
 </input-fields>
@@ -61,21 +61,21 @@ $v_java -jar $v_software -mode=silent -silent_xml=$v_tmp_silent
 # Creación  del dominio
 curl -s -o template1036.jar -k "https://wiki.legido.com/lib/exe/fetch.php?media=informatica:weblogic:template.jar"
 
-template=/u01/software/template1036.jar
-ruta_dominio=/u01/domains
-nou_template=/tmp/$$_nou_template.jar
-source $ruta/wlserver_10.3/server/bin/setWLSEnv.sh
-nombre_dominio=prueba
+v_template=/u01/software/template1036.jar
+v_ruta_dominio=/u01/domains
+v_nou_template=/tmp/$$_nou_template.jar
+source $v_ruta_binarios/wlserver_10.3/server/bin/setWLSEnv.sh
+v_nombre_dominio=prueba
 
 read -p "Usuario admin [weblogic]:" v_weblogic_user
 read -s -p "Password:" v_weblogic_password
 
 $java weblogic.WLST <<EOF
-readTemplate('$template')
-set('Name','$nombre_dominio')
-writeTemplate('$nou_template')
+readTemplate('$v_template')
+set('Name','$v_nombre_dominio')
+writeTemplate('$v_nou_template')
 closeTemplate()
-createDomain('$nou_template','$ruta_dominio/$nombre_dominio','$v_weblogic_user','$v_weblogic_password)
+createDomain('$v_nou_template','$v_ruta_dominio/$v_nombre_dominio','$v_weblogic_user','$v_weblogic_password)
 exit()
 EOF
 
