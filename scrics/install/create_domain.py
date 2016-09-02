@@ -31,8 +31,6 @@ def create_managed(v_name,v_nodemanager,v_ip,v_port,v_cluster):
   cd('/Servers/' + v_name + '/SSL/' + v_name)
   cmo.setHostnameVerificationIgnored(true)
   cd('/Servers/' + v_name + '/ServerStart/' + v_name)
-#  setEncrypted('Password', 'Password_gdsval', 'gdsval_Config', 'gdsval_Secret')
-#  cmo.setClassPath('-Djava.rmi.server.hostname=' + v_nodemanager + '.grifols.com -Dweblogic.security.SSL.nojce=true')
 
 def create_datasource(v_name,v_jndi,v_url,v_user,v_globaltransaction,v_ons,v_target):
   cd('/')
